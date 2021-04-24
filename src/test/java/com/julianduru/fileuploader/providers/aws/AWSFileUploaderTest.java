@@ -2,10 +2,12 @@ package com.julianduru.fileuploader.providers.aws;
 
 
 import com.julianduru.fileuploader.BaseServiceIntegrationTest;
+import com.julianduru.fileuploader.config.TestDataSourceConfig;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.io.Resource;
 
 import java.io.ByteArrayOutputStream;
@@ -16,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * created by julian
  */
-
 public class AWSFileUploaderTest extends BaseServiceIntegrationTest {
 
 
@@ -40,10 +41,10 @@ public class AWSFileUploaderTest extends BaseServiceIntegrationTest {
         fileUploader.uploadFile(
             bucketName, fileKey, uploadResource.getFile()
         );
-
+        
         var fileStream = fileUploader.downloadFile(bucketName, fileKey);
         var outStream = new ByteArrayOutputStream();
-
+        
         IOUtils.copy(fileStream, outStream);
 
         var fileContent = new String(outStream.toByteArray());

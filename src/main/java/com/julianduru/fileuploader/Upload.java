@@ -32,6 +32,12 @@ public class Upload {
 
 
     public void uploadFile(UploadRequest uploadRequest) throws UploaderException {
+        if (uploadRepository.existsByReference(uploadRequest.getReference())) {
+            throw new IllegalArgumentException(
+                String.format("File Upload Ref %s already exists", uploadRequest.getReference())
+            );
+        }
+
         var fileUpload = FileUpload.fromRequest(uploadRequest, defaultUploadProvider);
         
         uploadService.uploadFile(

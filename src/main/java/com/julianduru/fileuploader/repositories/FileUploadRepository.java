@@ -17,4 +17,7 @@ public interface FileUploadRepository extends JpaRepository<FileUpload, Long>  {
     Optional<FileUpload> findByReference(String reference);
 
 
+    boolean existsByReference(String reference);
+
+
 }
