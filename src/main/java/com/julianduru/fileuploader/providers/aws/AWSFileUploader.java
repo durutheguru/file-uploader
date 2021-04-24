@@ -7,6 +7,8 @@ import com.julianduru.fileuploader.providers.Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -33,7 +35,7 @@ public class AWSFileUploader implements Uploader {
     public void uploadFile(String bucketName, String fileKey, File file) throws UploaderException {
         var region = Region.of(awsConfig.getDefaultRegion());
 
-        try (var s3Client = S3Client.builder().region(region).build()) {
+        try (var s3Client = initClient(region)) {
             setup(s3Client, bucketName, region);
 
             log.info("Uploading Object: {}:{}", bucketName, fileKey);
@@ -65,9 +67,7 @@ public class AWSFileUploader implements Uploader {
 
     @Override
     public InputStream downloadFile(String bucketName, String fileKey) throws UploaderException {
-        var region = Region.of(awsConfig.getDefaultRegion());
-
-        var s3Client = S3Client.builder().region(region).build();
+        var s3Client = initClient();
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
             .bucket(bucketName)
             .key(fileKey)
@@ -162,7 +162,20 @@ public class AWSFileUploader implements Uploader {
 
     private S3Client initClient() {
         var region = Region.of(awsConfig.getDefaultRegion());
-        return S3Client.builder().region(region).build();
+        return initClient(region);
+    }
+
+
+    private S3Client initClient(Region region) {
+        var awsCredentials = AwsBasicCredentials.create(
+            awsConfig.getAccessKeyId(),
+            awsConfig.getSecretAccessKey()
+        );
+
+        return S3Client.builder()
+            .region(region)
+            .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
+            .build();
     }
 
 
@@ -211,8 +224,8 @@ public class AWSFileUploader implements Uploader {
     }
 
 
-
 }
+
 
 
 
