@@ -1,4 +1,4 @@
-package com.julianduru.fileuploader.aws;
+package com.julianduru.fileuploader.providers.aws;
 
 
 import lombok.Data;
@@ -20,4 +20,8 @@ public class AWSConfig {
     private String defaultRegion = Region.CA_CENTRAL_1.id();
 
 
+    private String existingTestBucketName;
+
+
 }
+
