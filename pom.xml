@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>file-uploader</artifactId>
-    <version>0.2.2-SNAPSHOT</version>
+    <version>0.2.4-SNAPSHOT</version>
     <name>file-uploader</name>
     <description>Spring Boot library to facilitate file uploads.</description>
 
