@@ -32,7 +32,6 @@ public class AWSConfig {
     private String secretAccessKey;
 
 
-    @NotEmpty(message = "Existing Test Bucket is required")
     private String existingTestBucketName;
 
 
