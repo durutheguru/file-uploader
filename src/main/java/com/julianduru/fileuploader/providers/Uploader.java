@@ -13,7 +13,7 @@ import java.io.InputStream;
 public interface Uploader {
 
 
-    void uploadFile(String containerName, String fileKey, File file) throws UploaderException;
+    void uploadFile(String containerName, String fileKey, InputStream inputStream) throws UploaderException;
 
 
     boolean containerExists(String containerName);

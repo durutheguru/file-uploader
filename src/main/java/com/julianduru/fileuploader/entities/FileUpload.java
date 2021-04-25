@@ -46,6 +46,14 @@ public class FileUpload {
     private String fileKey;
 
 
+    @Column(nullable = false, length = 200)
+    private String originalFileName;
+
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String fileType;
+
+
     @Column(nullable = false, unique = true, length = 200)
     private String reference;
 
@@ -74,6 +82,8 @@ public class FileUpload {
         upload.setFileKey(uploadRequest.getFileKey());
         upload.setReference(uploadRequest.getReference());
         upload.setMetaData(uploadRequest.getMetaData());
+        upload.setOriginalFileName(uploadRequest.getFileName());
+        upload.setFileType(uploadRequest.getFileType());
         
         if (uploadRequest.providerless()) {
             upload.setProvider(defaultUploadProvider);

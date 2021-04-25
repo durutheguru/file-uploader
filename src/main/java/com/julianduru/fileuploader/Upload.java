@@ -2,14 +2,15 @@ package com.julianduru.fileuploader;
 
 
 import com.julianduru.fileuploader.entities.FileUpload;
+import com.julianduru.fileuploader.exception.ReferenceNotFoundException;
 import com.julianduru.fileuploader.exception.UploaderException;
 import com.julianduru.fileuploader.providers.UploadProvider;
 import com.julianduru.fileuploader.repositories.FileUploadRepository;
+import com.julianduru.fileuploader.util.ReferenceGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -30,6 +31,19 @@ public class Upload {
     private final FileUploadService uploadService;
 
 
+    private final ReferenceGenerator referenceGenerator;
+
+
+
+    public String uploadFileForRef(UploadRequest uploadRequest) throws UploaderException {
+        var reference = referenceGenerator.generate();
+
+        uploadRequest.setReference(reference);
+        uploadFile(uploadRequest);
+
+        return reference;
+    }
+
 
     public void uploadFile(UploadRequest uploadRequest) throws UploaderException {
         if (uploadRepository.existsByReference(uploadRequest.getReference())) {
@@ -44,7 +58,7 @@ public class Upload {
             fileUpload.getProvider(),
             fileUpload.getContainerName(),
             fileUpload.getFileKey(),
-            uploadRequest.getFile()
+            uploadRequest.getInputStream()
         );
         
         uploadRepository.save(fileUpload);
@@ -59,7 +73,7 @@ public class Upload {
     public FileUpload getFileUpload(String reference) {
         return uploadRepository
             .findByReference(reference)
-            .orElseThrow(() -> new UploaderException(
+            .orElseThrow(() -> new ReferenceNotFoundException(
                 String.format("Upload Ref %s not found", reference)
             ));
     }
@@ -67,6 +81,11 @@ public class Upload {
 
     public InputStream downloadFile(String reference) throws UploaderException {
         var fileUpload = getFileUpload(reference);
+        return downloadFile(fileUpload);
+    }
+
+
+    public InputStream downloadFile(FileUpload fileUpload) throws UploaderException {
         return uploadService.downloadFile(
             fileUpload.getProvider(), fileUpload.getContainerName(), fileUpload.getFileKey()
         );
@@ -107,4 +126,6 @@ public class Upload {
 
 
 }
+
+
 

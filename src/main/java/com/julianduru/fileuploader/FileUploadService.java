@@ -13,7 +13,7 @@ import java.io.InputStream;
 public interface FileUploadService {
 
 
-    void uploadFile(String containerName, String fileKey, File file) throws UploaderException;
+    void uploadFile(String containerName, String fileKey, InputStream inputStream) throws UploaderException;
 
 
     boolean containerExists(String containerName);
@@ -31,7 +31,7 @@ public interface FileUploadService {
     void deleteFileAndContainer(String containerName, String fileKey) throws UploaderException;
 
 
-    void uploadFile(UploadProvider provider, String containerName, String fileKey, File file) throws UploaderException;
+    void uploadFile(UploadProvider provider, String containerName, String fileKey, InputStream inputStream) throws UploaderException;
 
 
     boolean containerExists(UploadProvider provider, String containerName);

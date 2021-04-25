@@ -39,7 +39,7 @@ public class AWSFileUploaderTest extends BaseServiceIntegrationTest {
         var fileKey = "upload/file-samples";
 
         fileUploader.uploadFile(
-            bucketName, fileKey, uploadResource.getFile()
+            bucketName, fileKey, uploadResource.getInputStream()
         );
         
         var fileStream = fileUploader.downloadFile(bucketName, fileKey);
