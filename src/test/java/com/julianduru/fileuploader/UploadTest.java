@@ -49,7 +49,9 @@ public class UploadTest extends BaseServiceIntegrationTest {
                 .reference(reference)
                 .containerName(awsConfig.getExistingTestBucketName())
                 .fileKey("upload/file-sample.txt")
-                .file(resource.getFile())
+                .fileName("file-sample.txt")
+                .fileType("text/plain; charset=UTF-8")
+                .inputStream(resource.getInputStream())
                 .build()
         );
 

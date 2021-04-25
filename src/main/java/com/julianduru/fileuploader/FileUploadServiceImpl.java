@@ -29,8 +29,8 @@ public class FileUploadServiceImpl implements FileUploadService {
 
 
     @Override
-    public void uploadFile(String containerName, String fileKey, File file) throws UploaderException {
-        uploadFile(defaultUploadProvider, containerName, fileKey, file);
+    public void uploadFile(String containerName, String fileKey, InputStream inputStream) throws UploaderException {
+        uploadFile(defaultUploadProvider, containerName, fileKey, inputStream);
     }
 
 
@@ -65,8 +65,8 @@ public class FileUploadServiceImpl implements FileUploadService {
 
 
     @Override
-    public void uploadFile(UploadProvider provider, String containerName, String fileKey, File file) throws UploaderException {
-        of(provider).uploadFile(containerName, fileKey, file);
+    public void uploadFile(UploadProvider provider, String containerName, String fileKey, InputStream inputStream) throws UploaderException {
+        of(provider).uploadFile(containerName, fileKey, inputStream);
     }
 
 

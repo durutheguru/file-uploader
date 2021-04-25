@@ -5,6 +5,7 @@ import com.julianduru.fileuploader.providers.UploadProvider;
 import lombok.*;
 
 import java.io.File;
+import java.io.InputStream;
 
 /**
  * created by julian
@@ -23,7 +24,13 @@ public class UploadRequest {
     private String fileKey;
 
 
-    private File file;
+    private String fileName;
+    
+    
+    private String fileType;
+
+
+    private InputStream inputStream;
 
 
     private UploadProvider provider;

@@ -14,7 +14,6 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class AWSFileUploader implements Uploader {
 
 
     @Override
-    public void uploadFile(String bucketName, String fileKey, File file) throws UploaderException {
+    public void uploadFile(String bucketName, String fileKey, InputStream inputStream) throws UploaderException {
         var region = Region.of(awsConfig.getDefaultRegion());
 
         try (var s3Client = initClient(region)) {
@@ -46,7 +45,7 @@ public class AWSFileUploader implements Uploader {
                     .key(fileKey)
                     .build(),
 
-                RequestBody.fromFile(file)
+                RequestBody.fromBytes(inputStream.readAllBytes())
             );
 
             log.info("Upload Complete..");
