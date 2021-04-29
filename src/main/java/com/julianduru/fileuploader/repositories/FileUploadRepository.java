@@ -5,6 +5,8 @@ import com.julianduru.fileuploader.entities.FileUpload;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,6 +20,9 @@ public interface FileUploadRepository extends JpaRepository<FileUpload, Long>  {
 
 
     boolean existsByReference(String reference);
+    
+
+    List<FileUpload> findByReferenceIn(Collection<String> references);
 
 
 }
