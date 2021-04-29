@@ -6,6 +6,7 @@ import com.julianduru.fileuploader.UploadRequest;
 import com.julianduru.fileuploader.providers.UploadProvider;
 import com.julianduru.fileuploader.util.ZonedDateTimeConverter;
 import lombok.Data;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -54,6 +55,7 @@ public class FileUpload {
     private String fileType;
 
 
+    @NaturalId
     @Column(nullable = false, unique = true, length = 200)
     private String reference;
 
