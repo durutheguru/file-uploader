@@ -1,6 +1,7 @@
 package com.julianduru.fileuploader;
 
 
+import com.julianduru.fileuploader.api.FileData;
 import com.julianduru.fileuploader.entities.FileUpload;
 import com.julianduru.fileuploader.exception.ReferenceNotFoundException;
 import com.julianduru.fileuploader.exception.UploaderException;
@@ -12,6 +13,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * created by julian
@@ -76,6 +80,18 @@ public class Upload {
             .orElseThrow(() -> new ReferenceNotFoundException(
                 String.format("Upload Ref %s not found", reference)
             ));
+    }
+
+
+    public List<FileData> getFileData(Collection<String> references) {
+        return uploadRepository.findByReferenceIn(references)
+            .stream().map(u -> FileData.builder()
+                .reference(u.getReference())
+                .originalFileName(u.getOriginalFileName())
+                .fileType(u.getFileType())
+                .metaData(u.getMetaData())
+                .build())
+            .collect(Collectors.toList());
     }
 
 

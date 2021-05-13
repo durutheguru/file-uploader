@@ -20,7 +20,7 @@ public interface FileUploadRepository extends JpaRepository<FileUpload, Long>  {
 
 
     boolean existsByReference(String reference);
-    
+
 
     List<FileUpload> findByReferenceIn(Collection<String> references);
 
