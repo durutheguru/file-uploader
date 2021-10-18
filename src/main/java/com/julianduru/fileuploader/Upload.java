@@ -96,6 +96,7 @@ public class Upload {
                 .reference(u.getReference())
                 .originalFileName(u.getOriginalFileName())
                 .fileType(u.getFileType())
+                .publicUrl(u.getPublicUrl())
                 .metaData(u.getMetaData())
                 .build())
             .collect(Collectors.toList());
