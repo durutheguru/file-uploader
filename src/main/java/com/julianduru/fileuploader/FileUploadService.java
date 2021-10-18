@@ -34,6 +34,9 @@ public interface FileUploadService {
     void uploadFile(UploadProvider provider, String containerName, String fileKey, InputStream inputStream) throws UploaderException;
 
 
+    String generatePublicUrl(UploadProvider provider, String containerName, String fileKey) throws UploaderException;
+
+
     boolean containerExists(UploadProvider provider, String containerName);
 
 
