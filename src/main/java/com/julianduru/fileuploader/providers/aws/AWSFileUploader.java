@@ -15,6 +15,7 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 
 import java.io.InputStream;
+import java.time.Instant;
 import java.util.List;
 
 /**
@@ -29,7 +30,6 @@ public class AWSFileUploader implements Uploader {
     private final AWSConfig awsConfig;
 
 
-
     @Override
     public void uploadFile(String bucketName, String fileKey, InputStream inputStream) throws UploaderException {
         var region = Region.of(awsConfig.getDefaultRegion());
@@ -39,7 +39,7 @@ public class AWSFileUploader implements Uploader {
 
             log.info("Uploading Object: {}:{}", bucketName, fileKey);
 
-            s3Client.putObject(
+            var response = s3Client.putObject(
                 PutObjectRequest.builder()
                     .bucket(bucketName)
                     .key(fileKey)
@@ -58,7 +58,7 @@ public class AWSFileUploader implements Uploader {
 
     @Override
     public boolean containerExists(String containerName) {
-        try (var s3Client = initClient()){
+        try (var s3Client = initClient()) {
             return bucketExists(containerName, s3Client);
         }
     }
@@ -203,7 +203,8 @@ public class AWSFileUploader implements Uploader {
     }
 
 
-    private boolean bucketExists(String bucketName, S3Client s3Client) {;
+    private boolean bucketExists(String bucketName, S3Client s3Client) {
+        ;
         try {
             s3Client.headBucket(
                 HeadBucketRequest.builder()
@@ -222,6 +223,22 @@ public class AWSFileUploader implements Uploader {
         return s3Client.listBuckets().buckets();
     }
 
+
+    public String generateUrl(String bucketName, String fileKey) {
+        var region = Region.of(awsConfig.getDefaultRegion());
+
+        try (var s3Client = initClient(region)) {
+            setup(s3Client, bucketName, region);
+
+            return s3Client.utilities()
+                .getUrl(builder -> builder.bucket(bucketName).key(fileKey))
+                .toExternalForm();
+        } catch (Throwable e) {
+            log.error(e.getMessage(), e);
+            throw new UploaderException(e);
+        }
+
+    }
 
 }
 

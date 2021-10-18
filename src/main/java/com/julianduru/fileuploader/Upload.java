@@ -64,6 +64,13 @@ public class Upload {
             fileUpload.getFileKey(),
             uploadRequest.getInputStream()
         );
+
+        var publicUrl = uploadService.generatePublicUrl(
+            fileUpload.getProvider(),
+            fileUpload.getContainerName(),
+            fileUpload.getFileKey()
+        );
+        fileUpload.setPublicUrl(publicUrl);
         
         uploadRepository.save(fileUpload);
     }
@@ -89,6 +96,7 @@ public class Upload {
                 .reference(u.getReference())
                 .originalFileName(u.getOriginalFileName())
                 .fileType(u.getFileType())
+                .publicUrl(u.getPublicUrl())
                 .metaData(u.getMetaData())
                 .build())
             .collect(Collectors.toList());

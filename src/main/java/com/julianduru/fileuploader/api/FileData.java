@@ -20,6 +20,9 @@ public class FileData {
     private String fileType;
 
 
+    private String publicUrl;
+
+
     private String metaData;
 
 
