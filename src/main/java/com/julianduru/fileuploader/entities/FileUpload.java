@@ -61,6 +61,10 @@ public class FileUpload {
 
 
     @Column(columnDefinition = "TEXT")
+    private String publicUrl;
+
+
+    @Column(columnDefinition = "TEXT")
     private String metaData;
 
 

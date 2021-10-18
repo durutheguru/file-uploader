@@ -31,6 +31,9 @@ public interface Uploader {
     void fullDelete(String containerName, String fileKey) throws UploaderException;
 
 
+    String generateUrl(String bucketName, String fileKey);
+
+
     UploadProvider provider();
 
 

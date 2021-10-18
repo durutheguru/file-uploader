@@ -71,6 +71,12 @@ public class FileUploadServiceImpl implements FileUploadService {
 
 
     @Override
+    public String generatePublicUrl(UploadProvider provider, String containerName, String fileKey) throws UploaderException {
+        return of(provider).generateUrl(containerName, fileKey);
+    }
+
+
+    @Override
     public boolean containerExists(UploadProvider provider, String containerName) {
         return of(provider).containerExists(containerName);
     }
