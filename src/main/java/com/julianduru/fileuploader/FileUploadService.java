@@ -1,10 +1,10 @@
 package com.julianduru.fileuploader;
 
 
+import com.julianduru.fileuploader.api.UploadResponse;
 import com.julianduru.fileuploader.exception.UploaderException;
 import com.julianduru.fileuploader.providers.UploadProvider;
 
-import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -31,7 +31,7 @@ public interface FileUploadService {
     void deleteFileAndContainer(String containerName, String fileKey) throws UploaderException;
 
 
-    void uploadFile(UploadProvider provider, String containerName, String fileKey, InputStream inputStream) throws UploaderException;
+    UploadResponse uploadFile(UploadProvider provider, String containerName, String fileKey, InputStream inputStream) throws UploaderException;
 
 
     String generatePublicUrl(UploadProvider provider, String containerName, String fileKey) throws UploaderException;

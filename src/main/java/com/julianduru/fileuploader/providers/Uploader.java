@@ -1,11 +1,13 @@
 package com.julianduru.fileuploader.providers;
 
 
+import com.julianduru.fileuploader.api.UploadResponse;
 import com.julianduru.fileuploader.exception.UploaderException;
 import com.julianduru.fileuploader.providers.UploadProvider;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Map;
 
 /**
  * created by julian
@@ -13,7 +15,7 @@ import java.io.InputStream;
 public interface Uploader {
 
 
-    void uploadFile(String containerName, String fileKey, InputStream inputStream) throws UploaderException;
+    UploadResponse uploadFile(String containerName, String fileKey, InputStream inputStream) throws UploaderException;
 
 
     boolean containerExists(String containerName);
