@@ -102,13 +102,26 @@ public class CloudinaryFileUploader implements Uploader {
 
     @Override
     public void deleteContainer(String containerName) throws UploaderException {
+        try {
+            var cloudinary = initCloudinary();
 
+            log.info("Deleting Folder from {}: {}", provider(), containerName);
+
+            var response = cloudinary.api().deleteFolder(containerName, Map.of());
+
+            log.info("Delete Complete...");
+        }
+        catch (Throwable e) {
+            log.error(e.getMessage(), e);
+            throw new UploaderException(e);
+        }
     }
 
 
     @Override
     public void fullDelete(String containerName, String fileKey) throws UploaderException {
-
+        deleteFile(containerName, fileKey);
+        deleteContainer(containerName);
     }
 
 

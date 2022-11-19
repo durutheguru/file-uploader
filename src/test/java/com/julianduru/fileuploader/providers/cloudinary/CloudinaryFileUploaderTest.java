@@ -51,7 +51,7 @@ public class CloudinaryFileUploaderTest extends BaseServiceIntegrationTest {
         var fileContent = outStream.toString();
         assertThat(fileContent).isNotBlank();
 
-        fileUploader.deleteFile(containerName, fileKey);
+        fileUploader.fullDelete(containerName, fileKey);
 
         assertThrows(Throwable.class, () -> fileUploader.downloadFile(containerName, fileKey));
     }
