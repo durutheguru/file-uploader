@@ -14,6 +14,8 @@ public enum UploadProvider {
 
     AWS,
 
+    CLOUDINARY
+
 
 }
 
