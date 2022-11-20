@@ -38,7 +38,7 @@ public class AWSFileUploaderTest extends BaseServiceIntegrationTest {
         var bucketName = "test-bucket-0x09" + System.currentTimeMillis();
         var fileKey = "upload/file-samples";
 
-        fileUploader.uploadFile(
+        var response = fileUploader.uploadFile(
             bucketName, fileKey, uploadResource.getInputStream()
         );
         
