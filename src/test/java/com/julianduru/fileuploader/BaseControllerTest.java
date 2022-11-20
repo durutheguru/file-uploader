@@ -1,6 +1,7 @@
 package com.julianduru.fileuploader;
 
 
+import com.github.javafaker.Faker;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public abstract class BaseControllerTest {
 
     @Autowired
     protected MockMvc mockMvc;
+
+
+    protected Faker faker = new Faker();
 
 
 }

@@ -2,12 +2,10 @@ package com.julianduru.fileuploader.providers.aws;
 
 
 import com.julianduru.fileuploader.BaseServiceIntegrationTest;
-import com.julianduru.fileuploader.config.TestDataSourceConfig;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.io.Resource;
 
 import java.io.ByteArrayOutputStream;

@@ -58,3 +58,4 @@ public class CloudinaryFileUploaderTest extends BaseServiceIntegrationTest {
 
 
 }
+

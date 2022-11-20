@@ -39,8 +39,8 @@ jobs:
         run: |
           NEW_VERSION=${{ steps.gitversion.outputs.semVer }}
           echo "Artifact Semantic Version: $NEW_VERSION"
-          mvn versions:set -DnewVersion=${NEW_VERSION}-SNAPSHOT -s settings.xml
-#          sed -i "s/<artifact.version>.*<\/artifact.version>/<artifact.version>${NEW_VERSION}-SNAPSHOT<\/artifact.version>/g" pom.xml
+          mvn versions:set -DnewVersion=${NEW_VERSION} -s settings.xml
+#          sed -i "s/<artifact.version>.*<\/artifact.version>/<artifact.version>${NEW_VERSION}<\/artifact.version>/g" pom.xml
       - name: Build with Maven
         run: mvn clean deploy -s settings.xml -f pom.xml
       - name: Committing Update
