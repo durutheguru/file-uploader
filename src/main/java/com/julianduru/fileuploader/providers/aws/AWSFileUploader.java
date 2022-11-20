@@ -1,6 +1,7 @@
 package com.julianduru.fileuploader.providers.aws;
 
 
+import com.julianduru.fileuploader.api.UploadResponse;
 import com.julianduru.fileuploader.exception.UploaderException;
 import com.julianduru.fileuploader.providers.UploadProvider;
 import com.julianduru.fileuploader.providers.Uploader;
@@ -31,13 +32,13 @@ public class AWSFileUploader implements Uploader {
 
 
     @Override
-    public void uploadFile(String bucketName, String fileKey, InputStream inputStream) throws UploaderException {
+    public UploadResponse uploadFile(String bucketName, String fileKey, InputStream inputStream) throws UploaderException {
         var region = Region.of(awsConfig.getDefaultRegion());
 
         try (var s3Client = initClient(region)) {
             setup(s3Client, bucketName, region);
 
-            log.info("Uploading Object: {}:{}", bucketName, fileKey);
+            log.info("Uploading Object to {}: {}:{}", provider(), bucketName, fileKey);
 
             var response = s3Client.putObject(
                 PutObjectRequest.builder()
@@ -49,6 +50,10 @@ public class AWSFileUploader implements Uploader {
             );
 
             log.info("Upload Complete..");
+
+            return UploadResponse.builder()
+                .publicUrl(generateUrl(bucketName, fileKey))
+                .build();
         } catch (Throwable e) {
             log.error(e.getMessage(), e);
             throw new UploaderException(e);
@@ -224,6 +229,7 @@ public class AWSFileUploader implements Uploader {
     }
 
 
+    @Override
     public String generateUrl(String bucketName, String fileKey) {
         var region = Region.of(awsConfig.getDefaultRegion());
 

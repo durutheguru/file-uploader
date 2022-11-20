@@ -58,19 +58,13 @@ public class Upload {
 
         var fileUpload = FileUpload.fromRequest(uploadRequest, defaultUploadProvider);
         
-        uploadService.uploadFile(
+        var uploadResponse = uploadService.uploadFile(
             fileUpload.getProvider(),
             fileUpload.getContainerName(),
             fileUpload.getFileKey(),
             uploadRequest.getInputStream()
         );
-
-        var publicUrl = uploadService.generatePublicUrl(
-            fileUpload.getProvider(),
-            fileUpload.getContainerName(),
-            fileUpload.getFileKey()
-        );
-        fileUpload.setPublicUrl(publicUrl);
+        fileUpload.setPublicUrl(uploadResponse.getPublicUrl());
         
         uploadRepository.save(fileUpload);
     }

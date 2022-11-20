@@ -1,6 +1,7 @@
 package com.julianduru.fileuploader;
 
 
+import com.julianduru.fileuploader.api.UploadResponse;
 import com.julianduru.fileuploader.exception.UploaderException;
 import com.julianduru.fileuploader.providers.UploadProvider;
 import com.julianduru.fileuploader.providers.Uploader;
@@ -8,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 
@@ -65,8 +65,8 @@ public class FileUploadServiceImpl implements FileUploadService {
 
 
     @Override
-    public void uploadFile(UploadProvider provider, String containerName, String fileKey, InputStream inputStream) throws UploaderException {
-        of(provider).uploadFile(containerName, fileKey, inputStream);
+    public UploadResponse uploadFile(UploadProvider provider, String containerName, String fileKey, InputStream inputStream) throws UploaderException {
+        return of(provider).uploadFile(containerName, fileKey, inputStream);
     }
 
 
