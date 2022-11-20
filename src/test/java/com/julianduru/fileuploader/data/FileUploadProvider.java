@@ -1,11 +1,10 @@
 package com.julianduru.fileuploader.data;
 
-import com.julianduru.fileuploader.entities.FileUpload;
+import com.julianduru.fileuploader.api.FileUpload;
 import com.julianduru.fileuploader.providers.UploadProvider;
 import com.julianduru.fileuploader.repositories.FileUploadRepository;
-import com.julianduru.util.test.JpaDataProvider;
+import com.julianduru.util.test.DataProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MimeTypeUtils;
 
@@ -14,16 +13,11 @@ import org.springframework.util.MimeTypeUtils;
  */
 @Component
 @RequiredArgsConstructor
-public class FileUploadProvider implements JpaDataProvider<FileUpload> {
+public class FileUploadProvider implements DataProvider<FileUpload> {
 
 
     private final FileUploadRepository fileUploadRepository;
 
-
-    @Override
-    public JpaRepository<FileUpload, Long> getRepository() {
-        return fileUploadRepository;
-    }
 
     @Override
     public FileUpload provide() {

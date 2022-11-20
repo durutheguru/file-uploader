@@ -2,21 +2,22 @@ package com.julianduru.fileuploader;
 
 
 import com.github.javafaker.Faker;
-import com.julianduru.fileuploader.config.TestDataSourceConfig;
+import com.julianduru.fileuploader.api.FileUpload;
 import com.julianduru.fileuploader.providers.aws.AWSConfig;
 import com.julianduru.fileuploader.repositories.FileUploadRepository;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.core.io.Resource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 
 /**
  * created by julian
  */
-@Import({TestDataSourceConfig.class})
 public class UploadTest extends BaseServiceIntegrationTest {
 
 
@@ -32,7 +33,7 @@ public class UploadTest extends BaseServiceIntegrationTest {
     private Upload upload;
 
 
-    @Autowired
+    @SpyBean
     private FileUploadRepository fileUploadRepository;
     
     
@@ -55,10 +56,7 @@ public class UploadTest extends BaseServiceIntegrationTest {
                 .build()
         );
 
-        assertThat(
-            fileUploadRepository
-                .existsByReference(reference)
-        ).isTrue();
+        verify(fileUploadRepository).save(Mockito.any(FileUpload.class));
     }
 
 

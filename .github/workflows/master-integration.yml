@@ -31,18 +31,20 @@ jobs:
         uses: gittools/actions/gitversion/execute@v0.9.3
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-      - name: Setup Java 14 env
+      - name: Setup Java 17 env
         uses: actions/setup-java@v1
         with:
-          java-version: 14
+          java-version: 17
       - name: Evaluate New Artifact Version
         run: |
           NEW_VERSION=${{ steps.gitversion.outputs.semVer }}
           echo "Artifact Semantic Version: $NEW_VERSION"
-          mvn versions:set -DnewVersion=${NEW_VERSION}-SNAPSHOT -s settings.xml
-#          sed -i "s/<artifact.version>.*<\/artifact.version>/<artifact.version>${NEW_VERSION}-SNAPSHOT<\/artifact.version>/g" pom.xml
+          mvn versions:set -DnewVersion=${NEW_VERSION} -s settings.xml
+#          sed -i "s/<artifact.version>.*<\/artifact.version>/<artifact.version>${NEW_VERSION}<\/artifact.version>/g" pom.xml
       - name: Build with Maven
-        run: mvn clean deploy -s settings.xml -f pom.xml
+        run: |
+          export MAVEN_OPTS="--add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED"
+          mvn clean deploy -s settings.xml -f pom.xml
       - name: Committing Update
         run: |
           git config user.email ${{ secrets.GIT_EMAIL }}

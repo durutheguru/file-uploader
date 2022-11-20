@@ -2,7 +2,7 @@ package com.julianduru.fileuploader;
 
 
 import com.julianduru.fileuploader.api.FileData;
-import com.julianduru.fileuploader.entities.FileUpload;
+import com.julianduru.fileuploader.api.FileUpload;
 import com.julianduru.fileuploader.exception.ReferenceNotFoundException;
 import com.julianduru.fileuploader.exception.UploaderException;
 import com.julianduru.fileuploader.providers.UploadProvider;
