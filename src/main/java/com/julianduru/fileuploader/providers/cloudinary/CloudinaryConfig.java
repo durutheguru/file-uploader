@@ -13,7 +13,6 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @Configuration
 @ConfigurationProperties(prefix = "file.uploader.cloudinary")
-@EnableConfigurationProperties
 public class CloudinaryConfig {
 
 

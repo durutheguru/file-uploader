@@ -17,7 +17,6 @@ import javax.validation.constraints.NotEmpty;
 @Validated
 @Configuration
 @ConfigurationProperties(prefix = "file.uploader.aws")
-@EnableConfigurationProperties
 public class AWSConfig {
 
 

@@ -1,9 +1,9 @@
 package com.julianduru.fileuploader.repositories;
 
 
-import com.julianduru.fileuploader.entities.FileUpload;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.julianduru.fileuploader.api.FileUpload;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Collection;
 import java.util.List;
@@ -12,8 +12,13 @@ import java.util.Optional;
 /**
  * created by julian
  */
-@Repository
-public interface FileUploadRepository extends JpaRepository<FileUpload, Long>  {
+public interface FileUploadRepository  {
+
+
+    FileUpload save(FileUpload upload);
+
+
+    Page<FileUpload> findAll(Pageable pageable);
 
 
     Optional<FileUpload> findByReference(String reference);
