@@ -11,6 +11,7 @@ import com.julianduru.fileuploader.util.ReferenceGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.io.InputStream;
 import java.util.Collection;
@@ -39,21 +40,24 @@ public class Upload {
 
 
 
-    public String uploadFileForRef(UploadRequest uploadRequest) throws UploaderException {
+    public FileUpload uploadFileForRef(UploadRequest uploadRequest) throws UploaderException {
         var reference = referenceGenerator.generate();
 
         uploadRequest.setReference(reference);
-        uploadFile(uploadRequest);
-
-        return reference;
+        return uploadFile(uploadRequest);
     }
 
 
-    public void uploadFile(UploadRequest uploadRequest) throws UploaderException {
-        if (uploadRepository.existsByReference(uploadRequest.getReference())) {
-            throw new IllegalArgumentException(
-                String.format("File Upload Ref %s already exists", uploadRequest.getReference())
-            );
+    public FileUpload uploadFile(UploadRequest uploadRequest) throws UploaderException {
+        if (StringUtils.hasText(uploadRequest.getReference())) {
+            if (uploadRepository.existsByReference(uploadRequest.getReference())) {
+                throw new IllegalArgumentException(
+                    String.format("File Upload Ref %s already exists", uploadRequest.getReference())
+                );
+            }
+        }
+        else {
+            uploadRequest.setReference(referenceGenerator.generate());
         }
 
         var fileUpload = FileUpload.fromRequest(uploadRequest, defaultUploadProvider);
@@ -66,7 +70,7 @@ public class Upload {
         );
         fileUpload.setPublicUrl(uploadResponse.getPublicUrl());
         
-        uploadRepository.save(fileUpload);
+        return uploadRepository.save(fileUpload);
     }
 
 
