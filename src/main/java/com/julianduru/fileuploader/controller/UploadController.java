@@ -3,6 +3,8 @@ package com.julianduru.fileuploader.controller;
 
 import com.julianduru.fileuploader.Upload;
 import com.julianduru.fileuploader.UploadRequest;
+import com.julianduru.fileuploader.api.FileData;
+import com.julianduru.fileuploader.api.FileUpload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -55,8 +57,8 @@ public class UploadController {
 
     @PostMapping
     @ResponseBody
-    public String uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        return upload.uploadFileForRef(
+    public FileData uploadFile(@RequestPart("file") MultipartFile multipartFile) throws IOException {
+        return upload.uploadFile(
             UploadRequest.builder()
                 .containerName(uploadContainerName)
                 .fileKey(uploadFileKeyPrefix + multipartFile.getOriginalFilename())
@@ -64,7 +66,8 @@ public class UploadController {
                 .fileType(multipartFile.getContentType())
                 .inputStream(multipartFile.getInputStream())
                 .build()
-        );
+        )
+        .data();
     }
 
 

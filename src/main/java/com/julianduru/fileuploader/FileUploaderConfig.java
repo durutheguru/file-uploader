@@ -1,5 +1,6 @@
 package com.julianduru.fileuploader;
 
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,5 +13,6 @@ import org.springframework.context.annotation.Configuration;
         "com.julianduru.fileuploader",
     }
 )
+@EnableConfigurationProperties
 public class FileUploaderConfig {
 }

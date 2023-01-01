@@ -20,7 +20,7 @@ import java.time.ZonedDateTime;
 public class FileUpload {
 
 
-    private Long id;
+    private String id;
 
 
     private ZonedDateTime timeAdded;
@@ -73,7 +73,17 @@ public class FileUpload {
         
         return upload;
     }
-    
+
+
+    public FileData data() {
+        return FileData.builder()
+            .fileType(getFileType())
+            .originalFileName(getOriginalFileName())
+            .reference(getReference())
+            .metaData(getMetaData())
+            .publicUrl(getPublicUrl())
+            .build();
+    }
     
 
 }
