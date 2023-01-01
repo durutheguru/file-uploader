@@ -16,6 +16,13 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
 # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: |
+            3.1.x
+#            5.0.x
+#            6.0.x
       - uses: actions/checkout@v2
       - name: Fetching All
         run: |
