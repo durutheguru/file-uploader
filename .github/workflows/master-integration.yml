@@ -49,6 +49,9 @@ jobs:
           mvn versions:set -DnewVersion=${NEW_VERSION}-SNAPSHOT -s settings.xml
 #          sed -i "s/<artifact.version>.*<\/artifact.version>/<artifact.version>${NEW_VERSION}<\/artifact.version>/g" pom.xml
       - name: Build with Maven
+        env:
+          ARTIFACT_REPO_USERNAME: ${{ secrets.ARTIFACT_REPO_USERNAME }}
+          ARTIFACT_REPO_PASSWORD: ${{ secrets.ARTIFACT_REPO_PASSWORD }}
         run: |
           export MAVEN_OPTS="--add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.desktop/java.awt.font=ALL-UNNAMED"
           mvn clean deploy -s settings.xml -f pom.xml
