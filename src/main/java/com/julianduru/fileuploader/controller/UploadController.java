@@ -51,7 +51,11 @@ public class UploadController {
             .header(
                 HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + fileUpload.getOriginalFileName() + "\""
-            ).body(file);
+            )
+            .header(
+                HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Content-Disposition"
+            )
+            .body(file);
     }
 
 
